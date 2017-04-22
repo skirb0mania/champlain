@@ -5,28 +5,16 @@
 //
 
 #include <iostream>
+#include "TicketManager.hpp"
 
 using namespace std;
 
-class SeatStructure {
+//
+// Constants
+//
+static const string INPUT_FILE = "SeatPrices.dat";
+static const string OUTPUT_FILE = "SeatAvailability.dat";
 
-private:
-    
-    bool available;
-    double price;
-public:
-    
-    // Accessors (getters)
-    
-    double getPrice() { return price; }
-    bool isAvailable() { return available; }
-    
-    // Mutators (setters)
-    
-    void setPrice(double p) { price = p; }
-    void setAvailable(bool a) { available = a; }
-    
-};
 
 //
 // Function Prototypes
@@ -42,13 +30,13 @@ int main(int argc, const char * argv[]) {
 
     cout << "\nWelcome to Ticket Manager v0.0" << endl;
     cout << "==============================" << endl;
-   
+
     // In reality, we'll probably call this in a loop
-    // so the user can perform multiple operations  
+    // so the user can perform multiple operations
     int selection = displayMenu();
     int validSelection = checkMainInput(selection);
-    executeSelection(validSelection); 
-
+    executeSelection(validSelection);
+    
     return 0;
 }
 
@@ -71,9 +59,13 @@ int displayMenu() {
 }
 
 void executeSelection(int selection) {
+    TicketManager tm = TicketManager(INPUT_FILE, OUTPUT_FILE);
+    
     switch(selection) {
         case 1:
-            cout << "You selected Display Seating Chart" << endl;
+            cout << "You selected Display Seating Chart" << endl << endl;
+            tm.printSeats();
+            cout << endl;
             break;
         case 2:
             cout << "You selected Request Tickets" << endl;
@@ -86,7 +78,7 @@ void executeSelection(int selection) {
             break;
         default:
             cout << "Invalid Selection" << endl;
-    } 
+    }
 }
 
 int checkMainInput(int input) {

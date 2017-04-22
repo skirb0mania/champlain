@@ -33,6 +33,7 @@ public:
 //
 int displayMenu();
 void executeSelection(int selection);
+int checkMainInput(int input);
 
 //
 // Main Function
@@ -45,7 +46,8 @@ int main(int argc, const char * argv[]) {
     // In reality, we'll probably call this in a loop
     // so the user can perform multiple operations  
     int selection = displayMenu();
-    executeSelection(selection); 
+    int validSelection = checkMainInput(selection);
+    executeSelection(validSelection); 
 
     return 0;
 }
@@ -85,4 +87,14 @@ void executeSelection(int selection) {
         default:
             cout << "Invalid Selection" << endl;
     } 
+}
+
+int checkMainInput(int input) {
+    int in = input;
+    while (in < 1 || in > 4) {
+        cout << "Invalid Input.  Enter an integer between 1 and 4, inclusive: ";
+        cin >> in;
+    }
+
+    return in;
 }

@@ -1,0 +1,78 @@
+//This program creates a ticketmanager class
+//joseph Dyke
+
+#include <iostream>
+#include <fstream>
+#include <string>
+
+using namespace std;
+
+//CharConverter class declaration
+class TicketManager
+{
+//Declare member variables
+//Create two arrays to store SeatAvailability and SeatPrices
+private:
+	double SeatPrices[15]; //15 rows the entire row is the same price double data type for prices
+	bool SeatAvailability[15][30]; //15 row 30 seats using char data type * = false # = true
+
+//declare constructor and member functions
+public:
+	TicketManager() //constructor read files from .dat files
+					//and write the info to the SeatPrices and SeatAvailability arrays
+	{
+		//First input and read the SeatPrices into an array
+		double price;
+		ifstream pricefile("SeatPrices.dat");
+		if (pricefile.is_open())
+		{
+			for (int row = 1; row <= 15; row++) //loop over every row in .dat file
+			{
+				pricefile >> price;
+				SeatPrices[row-1] = price; //Rememeber arrays start at 0! 
+				cout << SeatPrices[row-1] << endl; //verify there is info in the array
+			}
+			pricefile.close(); //close file
+		}
+		else cout << "Unable to open file";
+
+		//Now read and input the SeatAvailability into an array
+		string line;
+		bool seatavailable;
+		ifstream seatfile("SeatAvailability.dat");
+		if (seatfile.is_open())
+		{
+			for (int row = 1; row <= 15; row++) //loop over every line in .dat file
+			{
+				seatfile >> line;
+				for (int col = 1; col <= 30; col++) //loop over every character in line string 
+				{
+					if (line[col - 1] == '*') //if the character is * make seatavailable false
+					{
+						seatavailable = false;
+					}
+					else seatavailable = true; //otherwise make true
+					SeatAvailability[row-1][col-1] = seatavailable;
+					cout << SeatAvailability[row-1][col-1]; 
+				}
+				cout << '\n';
+			}
+			seatfile.close(); //close file
+		}
+		else cout << "Unable to open file";
+		
+	}
+	
+};
+
+
+//Main function
+int main()
+{
+	//create TicketManager object 
+	TicketManager ticketmanagerinstance;
+
+
+	return 0;
+
+}

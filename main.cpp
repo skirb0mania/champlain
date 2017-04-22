@@ -81,5 +81,8 @@ void executeSelection(int selection) {
             break;
         case 4:
             cout << "Have a Nice Day\n" << endl;
+            break;
+        default:
+            cout << "Invalid Selection" << endl;
     } 
 }

@@ -28,11 +28,12 @@ class TicketManager
 	public:
 	    TicketManager(string inputFile, string outputFile);
 	    void printSeats();
+		void ticketRequest(int numOfSeats, int desiredRow, int startSeatNum);
 
     private:
-		
     	double SeatPrices[ROW_NUM];
     	SeatStructure SeatAvailability[ROW_NUM][COL_NUM];
+        void ticketPurchase(int numOfSeats, int desiredRow, int startSeatNum);
 };
 
 #endif /* TicketManager_hpp */

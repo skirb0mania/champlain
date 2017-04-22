@@ -64,16 +64,61 @@ void TicketManager::printSeats()
         seatNum++;
     }
     cout << endl;
-    
+
     // Print Rows
 	for (int row = 0; row < ROW_NUM; row++)
 	{
 		cout << "Row " << row+1 << "\t";
 		for (int col = 0; col < COL_NUM; col++)
-        {
+		{
 			string seatIcon = SeatAvailability[row][col].isAvailable ? "#" : "*";
 			cout << seatIcon;
 		}
 		cout << endl;
 	}
+}
+
+void TicketManager::ticketRequest(int numOfSeats, int desiredRow, int startSeatNum) {
+	int salesTotal = 0;
+    int currentSeatNum = startSeatNum;
+    bool isAvailable = true;
+    string willPurchase;
+
+	if(startSeatNum + numOfSeats <= 30) {
+		for(int i = 1; i <= numOfSeats; i++ ) {
+	        // Need -1 here because seat cols and rows start at 1, array starts at 0
+			SeatStructure currentSeat = SeatAvailability[desiredRow-1][currentSeatNum-1];
+	        cout << "SEAT " << currentSeatNum << "| Available: " << (currentSeat.isAvailable ? "Yes" : "No") << ", ";
+	        cout << "Price: $" << currentSeat.price << endl;
+	        currentSeatNum++;
+
+	        // Update total
+	        salesTotal += currentSeat.price;
+
+	        // Set availability on order
+	        if(!currentSeat.isAvailable)
+	            isAvailable = false;
+		}
+
+	    if(!isAvailable) {
+	        cout << endl;
+	        cout << "These seats are not available. Please try a different combination." << endl;
+	    } else {
+	        cout << "These seats are available. The total will be: $" << salesTotal << endl;
+	        cout << "Would you like to purchase? (y or n): ";
+	        cin >> willPurchase;
+	        if(willPurchase.find("y") != string::npos) {
+	            ticketPurchase(numOfSeats, desiredRow, startSeatNum);
+	        } else {
+	            cout << "Thank you for your interest." << endl;
+	        }
+
+	    }
+	} else {
+		cout << "There aren't enough seats in the row to fulfill your request from that starting seat.";
+	}
+}
+
+void TicketManager::ticketPurchase(int numOfSeats, int desiredRow, int startSeatNum) {
+    cout << "Purchase tickets..." << endl;
 }

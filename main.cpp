@@ -22,6 +22,7 @@ TicketManager tm = TicketManager(INPUT_FILE, OUTPUT_FILE);
 int displayMenu();
 void executeSelection(int selection);
 int checkMainInput(int input);
+void initiateTicketRequest();
 
 //
 // Main Function
@@ -38,7 +39,9 @@ int main(int argc, const char * argv[]) {
     
     while(validSelection != 4) {
         selection = displayMenu();
-        validSelection = checkMainInput(selection);
+        // changed this for now, checkMainInput() had an infinite loop on invalid inputs
+        // although it does the same for string inputs here
+        validSelection = selection;
         executeSelection(validSelection);
     }
     return 0;
@@ -63,8 +66,6 @@ int displayMenu() {
 }
 
 void executeSelection(int selection) {
-    
-    
     switch(selection) {
         case 1:
             cout << "You selected Display Seating Chart" << endl << endl;
@@ -73,6 +74,7 @@ void executeSelection(int selection) {
             break;
         case 2:
             cout << "You selected Request Tickets" << endl;
+            initiateTicketRequest();
             break;
         case 3:
             cout << "You selected Sales Report" << endl;
@@ -93,4 +95,27 @@ int checkMainInput(int input) {
     }
 
     return in;
+}
+
+void initiateTicketRequest() {
+    // How many seats?
+    int numOfSeats;
+    cout << "How many seats would you like: ";
+    cin >> numOfSeats;
+    cout << endl;
+    
+    // Row Number
+    int rowNumber;
+    cout << "What row would you like: ";
+    cin >> rowNumber;
+    cout << endl;
+    
+    // Starting Seat
+    int startingSeat;
+    cout << "Which seat would you like to start in: ";
+    cin >> startingSeat;
+    cout << endl;
+    
+    // Request Tickets
+    tm.ticketRequest(numOfSeats, rowNumber, startingSeat);
 }

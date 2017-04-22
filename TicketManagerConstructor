@@ -14,7 +14,7 @@ class TicketManager
 //Create two arrays to store SeatAvailability and SeatPrices
 private:
 	double SeatPrices[15]; //15 rows the entire row is the same price double data type for prices
-	bool SeatAvailability[15][30]; //15 row 30 seats using char data type * = false # = true
+	bool SeatAvailability[15][30]; //15 row 30 seats using bool data type * = false # = true
 
 //declare constructor and member functions
 public:

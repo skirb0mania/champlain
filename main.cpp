@@ -14,7 +14,7 @@ using namespace std;
 //
 static const string INPUT_FILE = "SeatPrices.dat";
 static const string OUTPUT_FILE = "SeatAvailability.dat";
-
+TicketManager tm = TicketManager(INPUT_FILE, OUTPUT_FILE);
 
 //
 // Function Prototypes
@@ -33,10 +33,14 @@ int main(int argc, const char * argv[]) {
 
     // In reality, we'll probably call this in a loop
     // so the user can perform multiple operations
-    int selection = displayMenu();
-    int validSelection = checkMainInput(selection);
-    executeSelection(validSelection);
+    int selection,
+        validSelection;
     
+    while(validSelection != 4) {
+        selection = displayMenu();
+        validSelection = checkMainInput(selection);
+        executeSelection(validSelection);
+    }
     return 0;
 }
 
@@ -59,7 +63,7 @@ int displayMenu() {
 }
 
 void executeSelection(int selection) {
-    TicketManager tm = TicketManager(INPUT_FILE, OUTPUT_FILE);
+    
     
     switch(selection) {
         case 1:

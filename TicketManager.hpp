@@ -16,8 +16,8 @@ using namespace std;
 
 // SeatStructure to hold price and availability of seat ticket
 struct SeatStructure {
-	double price;
-	bool isAvailable;
+    double price;
+    bool isAvailable;
     int row;
     int col;
 };
@@ -27,15 +27,15 @@ static const int COL_NUM = 30;
 
 class TicketManager
 {
-	public:
-	    TicketManager(string inputFile, string outputFile);
-	    void printSeats();
-		void ticketRequest(int numOfSeats, int desiredRow, int startSeatNum);
-
-    private:
-    	double SeatPrices[ROW_NUM];
-    	SeatStructure SeatAvailability[ROW_NUM][COL_NUM];
-        void ticketPurchase(SeatStructure seatArray[], int size);
+public:
+    TicketManager(string inputFile, string outputFile);
+    void printSeats();
+    void ticketRequest(int numOfSeats, int desiredRow, int startSeatNum);
+    
+private:
+    double SeatPrices[ROW_NUM];
+    SeatStructure SeatAvailability[ROW_NUM][COL_NUM];
+    void ticketPurchase(SeatStructure seatArray[], int size);
 };
 
 #endif /* TicketManager_hpp */

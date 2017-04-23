@@ -16,46 +16,11 @@ TicketManager::TicketManager(string inputFile, string outputFile)
     // Set outputfile to passed string
     setOutputFile(outputFile);
     
-    //First input and read the SeatPrices into an array
-    double price;
+    // Populate the row prices
+    populateRowPrices(inputFile);
     
-    ifstream pricefile(inputFile);
-    if (pricefile.is_open())
-    {
-        for (int row = 0; row < ROW_NUM; row++) //loop over every row in .dat file
-        {
-            pricefile >> price;
-            SeatPrices[row] = price; //Rememeber arrays start at 0!
-        }
-        pricefile.close(); //close file
-    }
-    else cout << "Unable to open file" << endl;
-    
-    //Now read and input the SeatAvailability into an array of SeatStructures
-    string line;
-    bool seatavailable;
-    ifstream seatfile(outputFile);
-    if (seatfile.is_open())
-    {
-        for (int row = 0; row < ROW_NUM; row++) //loop over every line in .dat file
-        {
-            seatfile >> line;
-            for (int col = 0; col < COL_NUM; col++) //loop over every character in line string
-            {
-                if (line[col] == '*') //if the character is * make seatavailable false
-                    seatavailable = false;
-                else
-                    seatavailable = true; //otherwise make true
-                
-                SeatAvailability[row][col].isAvailable = seatavailable;
-                SeatAvailability[row][col].price = SeatPrices[row];
-                SeatAvailability[row][col].row = row;
-                SeatAvailability[row][col].col = col;
-            }
-        }
-        seatfile.close(); //close file
-    }
-    else cout << "Unable to open file" << endl;
+    // Populate the seating availability chart/array
+    populateSeatAvailability(outputFile);
 }
 
 void TicketManager::printSeats()
@@ -169,6 +134,53 @@ void TicketManager::ticketPurchase(SeatStructure seatArray[], int size) {
             cout << SeatAvailability[row][col].price << endl;
         }
     }
+}
+
+void TicketManager::populateRowPrices(string s)
+{
+    //First input and read the SeatPrices into an array
+    double price;
+    
+    ifstream pricefile(s);
+    if (pricefile.is_open())
+    {
+        for (int row = 0; row < ROW_NUM; row++) //loop over every row in .dat file
+        {
+            pricefile >> price;
+            SeatPrices[row] = price; //Rememeber arrays start at 0!
+        }
+        pricefile.close(); //close file
+    }
+    else cout << "Unable to open file" << endl;
+}
+
+void TicketManager::populateSeatAvailability(string s)
+{
+    //Now read and input the SeatAvailability into an array of SeatStructures
+    string line;
+    bool seatavailable;
+    ifstream seatfile(outputFile);
+    if (seatfile.is_open())
+    {
+        for (int row = 0; row < ROW_NUM; row++) //loop over every line in .dat file
+        {
+            seatfile >> line;
+            for (int col = 0; col < COL_NUM; col++) //loop over every character in line string
+            {
+                if (line[col] == '*') //if the character is * make seatavailable false
+                    seatavailable = false;
+                else
+                    seatavailable = true; //otherwise make true
+                
+                SeatAvailability[row][col].isAvailable = seatavailable;
+                SeatAvailability[row][col].price = SeatPrices[row];
+                SeatAvailability[row][col].row = row;
+                SeatAvailability[row][col].col = col;
+            }
+        }
+        seatfile.close(); //close file
+    }
+    else cout << "Unable to open file" << endl;
 }
 
 TicketManager::~TicketManager()

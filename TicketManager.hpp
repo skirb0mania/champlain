@@ -41,6 +41,8 @@ private:
     double SeatPrices[ROW_NUM];
     void ticketPurchase(SeatStructure seatArray[], int size);
     void setOutputFile(string s) { outputFile = s; };
+    void populateRowPrices(string s);
+    void populateSeatAvailability(string s);
 };
 
 #endif /* TicketManager_hpp */

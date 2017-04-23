@@ -18,6 +18,8 @@ using namespace std;
 struct SeatStructure {
 	double price;
 	bool isAvailable;
+    int row;
+    int col;
 };
 
 static const int ROW_NUM = 15;
@@ -33,7 +35,7 @@ class TicketManager
     private:
     	double SeatPrices[ROW_NUM];
     	SeatStructure SeatAvailability[ROW_NUM][COL_NUM];
-        void ticketPurchase(int numOfSeats, int desiredRow, int startSeatNum);
+        void ticketPurchase(SeatStructure seatArray[], int size);
 };
 
 #endif /* TicketManager_hpp */

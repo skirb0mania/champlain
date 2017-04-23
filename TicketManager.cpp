@@ -46,6 +46,8 @@ TicketManager::TicketManager(string inputFile, string outputFile)
 
 				SeatAvailability[row][col].isAvailable = seatavailable;
 				SeatAvailability[row][col].price = SeatPrices[row];
+                SeatAvailability[row][col].row = row;
+                SeatAvailability[row][col].col = col;
 			}
 		}
 		seatfile.close(); //close file
@@ -83,42 +85,83 @@ void TicketManager::ticketRequest(int numOfSeats, int desiredRow, int startSeatN
     int currentSeatNum = startSeatNum;
     bool isAvailable = true;
     string willPurchase;
-
-	if(startSeatNum + numOfSeats <= 30) {
+    SeatStructure seatArray[numOfSeats];
+    
+    // Make sure there's enough seats for this order on this row starting with the desired seat #
+	if(startSeatNum + numOfSeats <= COL_NUM) {
 		for(int i = 1; i <= numOfSeats; i++ ) {
 	        // Need -1 here because seat cols and rows start at 1, array starts at 0
 			SeatStructure currentSeat = SeatAvailability[desiredRow-1][currentSeatNum-1];
-	        cout << "SEAT " << currentSeatNum << "| Available: " << (currentSeat.isAvailable ? "Yes" : "No") << ", ";
-	        cout << "Price: $" << currentSeat.price << endl;
-	        currentSeatNum++;
-
+	        
+            // Update seat array to pass to purchase method
+            seatArray[i-1] = currentSeat;
+            
 	        // Update total
 	        salesTotal += currentSeat.price;
-
-	        // Set availability on order
-	        if(!currentSeat.isAvailable)
-	            isAvailable = false;
+            
+            // update seat num
+            currentSeatNum++;
+            
+            // Set availability on order (if one seat is unavailable, whole order is void)
+            if(!currentSeat.isAvailable) {
+                isAvailable = false;
+                break;
+            }
+            
 		}
 
+        // If seat(s) are unavailable, notify user
 	    if(!isAvailable) {
 	        cout << endl;
 	        cout << "These seats are not available. Please try a different combination." << endl;
-	    } else {
+	    }
+        // If seats are available confirm order
+        else {
+            cout << endl;
 	        cout << "These seats are available. The total will be: $" << salesTotal << endl;
 	        cout << "Would you like to purchase? (y or n): ";
 	        cin >> willPurchase;
 	        if(willPurchase.find("y") != string::npos) {
-	            ticketPurchase(numOfSeats, desiredRow, startSeatNum);
+	            ticketPurchase(seatArray, numOfSeats);
 	        } else {
 	            cout << "Thank you for your interest." << endl;
 	        }
-
 	    }
 	} else {
 		cout << "There aren't enough seats in the row to fulfill your request from that starting seat.";
 	}
 }
 
-void TicketManager::ticketPurchase(int numOfSeats, int desiredRow, int startSeatNum) {
-    cout << "Purchase tickets..." << endl;
+void TicketManager::ticketPurchase(SeatStructure seatArray[], int size) {
+    int inputMoney;
+    double total = 0.0;
+    
+    // Set the total for purchase
+    for(int i = 0; i < size; i++) {
+        total += seatArray[i].price;
+    }
+
+    // Get the input for money
+    cout << "Please enter money in dollars: ";
+    cin >> inputMoney;
+    
+    // Output for user
+    if(inputMoney < total) {
+        cout << endl;
+        cout << "That is not sufficient to purchase these tickets." << endl;
+    } else {
+        cout << endl;
+        cout << "Sold. Here are your tickets: " << endl;
+        // Print each ticket
+        for(int i = 0; i < size; i++) {
+            int row = seatArray[i].row;
+            int col = seatArray[i].col;
+            // Update ticket as sold
+            SeatAvailability[row][col].isAvailable = false;
+            
+            // Present ticket to user
+            cout << "TICKET | row: "<< row + 1 << " seat#: " << col + 1 << " price: $";
+            cout << SeatAvailability[row][col].price << endl;
+        }
+    }
 }

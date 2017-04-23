@@ -165,3 +165,8 @@ void TicketManager::ticketPurchase(SeatStructure seatArray[], int size) {
         }
     }
 }
+
+TicketManager::~TicketManager()
+{
+    // Destructor: write contents of array to output file
+}

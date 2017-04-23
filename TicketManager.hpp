@@ -29,8 +29,10 @@ class TicketManager
 {
 public:
     TicketManager(string inputFile, string outputFile);
+    ~TicketManager();
     void printSeats();
     void ticketRequest(int numOfSeats, int desiredRow, int startSeatNum);
+    
     
 private:
     double SeatPrices[ROW_NUM];

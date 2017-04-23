@@ -34,10 +34,13 @@ public:
     void ticketRequest(int numOfSeats, int desiredRow, int startSeatNum);
     
     
+    
 private:
-    double SeatPrices[ROW_NUM];
     SeatStructure SeatAvailability[ROW_NUM][COL_NUM];
+    string outputFile;
+    double SeatPrices[ROW_NUM];
     void ticketPurchase(SeatStructure seatArray[], int size);
+    void setOutputFile(string s) { outputFile = s; };
 };
 
 #endif /* TicketManager_hpp */

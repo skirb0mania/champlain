@@ -73,7 +73,7 @@ void executeSelection(int selection) {
             cout << endl;
             break;
         case 2:
-            cout << "You selected Request Tickets" << endl;
+            cout << "You selected Request Tickets" << endl << endl;
             initiateTicketRequest();
             break;
         case 3:
@@ -102,19 +102,16 @@ void initiateTicketRequest() {
     int numOfSeats;
     cout << "How many seats would you like: ";
     cin >> numOfSeats;
-    cout << endl;
     
     // Row Number
     int rowNumber;
     cout << "What row would you like: ";
     cin >> rowNumber;
-    cout << endl;
     
     // Starting Seat
     int startingSeat;
     cout << "Which seat would you like to start in: ";
     cin >> startingSeat;
-    cout << endl;
     
     // Request Tickets
     tm.ticketRequest(numOfSeats, rowNumber, startingSeat);

@@ -13,6 +13,9 @@
 
 TicketManager::TicketManager(string inputFile, string outputFile)
 {
+    // Set outputfile to passed string
+    setOutputFile(outputFile);
+    
     //First input and read the SeatPrices into an array
     double price;
     
@@ -133,7 +136,7 @@ void TicketManager::ticketRequest(int numOfSeats, int desiredRow, int startSeatN
 }
 
 void TicketManager::ticketPurchase(SeatStructure seatArray[], int size) {
-    int inputMoney;
+    double inputMoney;
     double total = 0.0;
     
     // Set the total for purchase
@@ -154,8 +157,10 @@ void TicketManager::ticketPurchase(SeatStructure seatArray[], int size) {
         cout << "Sold. Here are your tickets: " << endl;
         // Print each ticket
         for(int i = 0; i < size; i++) {
+            // Get row and seat from selected ticket
             int row = seatArray[i].row;
             int col = seatArray[i].col;
+            
             // Update ticket as sold
             SeatAvailability[row][col].isAvailable = false;
             
@@ -169,4 +174,19 @@ void TicketManager::ticketPurchase(SeatStructure seatArray[], int size) {
 TicketManager::~TicketManager()
 {
     // Destructor: write contents of array to output file
+    ofstream seatfile(outputFile);
+    if (seatfile.is_open())
+    {
+        for (int row = 0; row < ROW_NUM; row++)
+        {
+            string line;
+            for (int col = 0; col < COL_NUM; col++)
+            {
+                line += SeatAvailability[row][col].isAvailable ? "#" : "*";
+            }
+            seatfile << line << "\n";
+        }
+        seatfile.close();
+    }
+    else cout << "Unable to open file" << endl;
 }

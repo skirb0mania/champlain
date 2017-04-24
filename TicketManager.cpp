@@ -3,6 +3,7 @@
 //  champlain
 
 #include <iostream>
+#include <iomanip>
 #include <fstream>
 #include <string>
 #include "TicketManager.hpp"
@@ -181,6 +182,33 @@ void TicketManager::populateSeatAvailability(string s)
         seatfile.close(); //close file
     }
     else cout << "Unable to open file" << endl;
+}
+
+void TicketManager::salesReport()
+{
+    int totalSold = 0;
+    int totalSales = 0;
+    int totalAvailable = 0;
+    
+    // Get sold seats, total available and total sales
+    for (int row = 0; row < ROW_NUM; row++)
+    {
+        for (int col = 0; col < COL_NUM; col++)
+        {
+            if(!SeatAvailability[row][col].isAvailable) {
+                totalSold++;
+                totalSales += SeatAvailability[row][col].price;
+            } else {
+                totalAvailable++;
+            }
+        }
+    }
+    
+    cout << endl << REPORT_HEADER;
+    cout << left << setw(25) << "Total Sold: " << setw(10) << totalSold << endl;
+    cout << left << setw(25) << "Total Available: " << setw(10) << totalAvailable << endl;
+    cout << left << setw(25) << "Money Collected: " << setw(0) << "$" << setw(10) << totalSales << endl;
+    
 }
 
 TicketManager::~TicketManager()

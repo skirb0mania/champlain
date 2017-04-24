@@ -78,6 +78,7 @@ void executeSelection(int selection) {
             break;
         case 3:
             cout << "You selected Sales Report" << endl;
+            tm.salesReport();
             break;
         case 4:
             cout << "Have a Nice Day\n" << endl;

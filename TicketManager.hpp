@@ -24,6 +24,7 @@ struct SeatStructure {
 
 static const int ROW_NUM = 15;
 static const int COL_NUM = 30;
+static const string REPORT_HEADER = "SALES REPORT:\n=================================\n";
 
 class TicketManager
 {
@@ -32,8 +33,7 @@ public:
     ~TicketManager();
     void printSeats();
     void ticketRequest(int numOfSeats, int desiredRow, int startSeatNum);
-    
-    
+    void salesReport();
     
 private:
     SeatStructure SeatAvailability[ROW_NUM][COL_NUM];

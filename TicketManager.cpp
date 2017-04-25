@@ -28,7 +28,7 @@ void TicketManager::printSeats()
 {
     // Print Columns/Seat #s
     int seatNum = 1;
-    cout << "\t\t";
+    cout << "\t";
     for (int col = 0; col < COL_NUM; col++) {
         seatNum = seatNum < 10 ? seatNum : seatNum = 0;
         cout << seatNum;

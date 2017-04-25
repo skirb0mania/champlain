@@ -68,12 +68,11 @@ int displayMenu() {
 void executeSelection(int selection) {
     switch(selection) {
         case 1:
-            cout << "You selected Display Seating Chart" << endl << endl;
+            cout << endl;
             tm.printSeats();
             cout << endl;
             break;
         case 2:
-            cout << "You selected Request Tickets" << endl << endl;
             initiateTicketRequest();
             break;
         case 3:

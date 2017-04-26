@@ -54,7 +54,9 @@ void TicketManager::ticketRequest(int numOfSeats, int desiredRow, int startSeatN
     int currentSeatNum = startSeatNum;
     bool isAvailable = true;
     string willPurchase;
-    SeatStructure seatArray[numOfSeats];
+    SeatStructure *seatArray = nullptr; //dynamic array of structures
+
+	seatArray = new SeatStructure[numOfSeats]; //allocate dynamic array of structures
     
     // Make sure there's enough seats for this order on this row starting with the desired seat #
     if(startSeatNum + numOfSeats <= COL_NUM) {
@@ -99,6 +101,10 @@ void TicketManager::ticketRequest(int numOfSeats, int desiredRow, int startSeatN
     } else {
         cout << "There aren't enough seats in the row to fulfill your request from that starting seat.";
     }
+
+	//Free dynamically allocated memory
+	delete[] seatArray;
+	seatArray = nullptr;
 }
 
 void TicketManager::ticketPurchase(SeatStructure seatArray[], int size) {
@@ -111,8 +117,7 @@ void TicketManager::ticketPurchase(SeatStructure seatArray[], int size) {
     }
     
     // Get the input for money
-    cout << "Please enter money in dollars: ";
-    cin >> inputMoney;
+    inputMoney = getUserInputMoney("Please enter money in dollars:","Error. Invalid input. Please try again");
     
     // Output for user
     if(inputMoney < total) {
@@ -120,7 +125,7 @@ void TicketManager::ticketPurchase(SeatStructure seatArray[], int size) {
         cout << "That is not sufficient to purchase these tickets." << endl;
     } else {
         cout << endl;
-        cout << "Sold. Here are your tickets: " << endl;
+        cout << "Sold. Your change is: $"<<total-inputMoney<<". Here are your tickets: " << endl;
         // Print each ticket
         for(int i = 0; i < size; i++) {
             // Get row and seat from selected ticket
@@ -187,7 +192,7 @@ void TicketManager::populateSeatAvailability(string s)
 void TicketManager::salesReport()
 {
     int totalSold = 0;
-    int totalSales = 0;
+    double totalSales = 0;
     int totalAvailable = 0;
     
     // Get sold seats, total available and total sales
@@ -210,6 +215,24 @@ void TicketManager::salesReport()
     cout << left << setw(25) << "Money Collected: " << setw(0) << "$" << setw(10) << totalSales << endl;
     
 }
+
+
+double TicketManager::getUserInputMoney(string userQuestion, string errorMsg) {
+	double n;
+	while (true) {
+		cout << userQuestion;
+		if (cin >> n) {
+			break;
+		}
+		else {
+			cout << errorMsg << endl;
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		}
+	}
+	return n;
+}
+
 
 TicketManager::~TicketManager()
 {

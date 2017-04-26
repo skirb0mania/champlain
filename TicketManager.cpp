@@ -50,7 +50,7 @@ void TicketManager::printSeats()
 }
 
 void TicketManager::ticketRequest(int numOfSeats, int desiredRow, int startSeatNum) {
-    int salesTotal = 0;
+    double salesTotal = 0.0;
     int currentSeatNum = startSeatNum;
     bool isAvailable = true;
     string willPurchase;

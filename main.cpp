@@ -12,57 +12,54 @@ using namespace std;
 //
 // Constants
 //
-static const string INPUT_FILE = "SeatPrices.dat";
-static const string OUTPUT_FILE = "SeatAvailability.dat";
+static const string INPUT_FILE = "files/SeatPrices.dat";
+static const string OUTPUT_FILE = "files/SeatAvailability.dat";
 TicketManager tm = TicketManager(INPUT_FILE, OUTPUT_FILE);
 
 //
 // Function Prototypes
 //
-int displayMenu();
+void displayMenu();
 void executeSelection(int selection);
 int checkMainInput(int input);
 void initiateTicketRequest();
+int getUserInputNumber(string, string);
 
 //
 // Main Function
 //
 int main(int argc, const char * argv[]) {
-
+    int validSelection;
+    
     cout << "\nWelcome to Ticket Manager v0.0" << endl;
     cout << "==============================" << endl;
-
-    // In reality, we'll probably call this in a loop
-    // so the user can perform multiple operations
-    int selection,
-        validSelection;
     
-    while(validSelection != 4) {
-        selection = displayMenu();
-        // changed this for now, checkMainInput() had an infinite loop on invalid inputs
-        // although it does the same for string inputs here
-        validSelection = selection;
+    displayMenu();
+    
+    while(true) {
+        validSelection = getUserInputNumber("\nEnter the Number of Your Choice: ", "Invalid Input.");
         executeSelection(validSelection);
+        if(validSelection == 4) {
+            break;
+        } else {
+            displayMenu();
+        }
     }
+    
     return 0;
 }
 
 //
 // Function Definitions
 //
-int displayMenu() {
-
-    int selection;
+void displayMenu() {
 
     cout << "\nSelect From the Following Menu Items:" << endl;
     cout << "1. Display Seating Chart" << endl;
     cout << "2. Request Tickets" << endl;
     cout << "3. Print Sales Report" << endl;
     cout << "4. Exit" << endl;
-    cout << "\nEnter the Number of Your Choice: ";
-
-    cin >> selection;
-    return selection;
+    
 }
 
 void executeSelection(int selection) {
@@ -85,6 +82,21 @@ void executeSelection(int selection) {
         default:
             cout << "Invalid Selection" << endl;
     }
+}
+
+int getUserInputNumber(string userQuestion, string errorMsg) {
+    int n;
+    while(true) {
+        cout << userQuestion;
+        if (cin >> n) {
+            break;
+        } else {
+            cout << errorMsg << endl;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        }
+    }
+    return n;
 }
 
 int checkMainInput(int input) {

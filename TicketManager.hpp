@@ -1,4 +1,4 @@
-//
+#pragma once
 //  TicketManager.hpp
 //  champlain
 //
@@ -16,10 +16,10 @@ using namespace std;
 
 // SeatStructure to hold price and availability of seat ticket
 struct SeatStructure {
-    double price;
-    bool isAvailable;
-    int row;
-    int col;
+	double price;
+	bool isAvailable;
+	int row;
+	int col;
 };
 
 static const int ROW_NUM = 15;
@@ -29,20 +29,21 @@ static const string REPORT_HEADER = "SALES REPORT:\n============================
 class TicketManager
 {
 public:
-    TicketManager(string inputFile, string outputFile);
-    ~TicketManager();
-    void printSeats();
-    void ticketRequest(int numOfSeats, int desiredRow, int startSeatNum);
-    void salesReport();
-    
+	TicketManager(string inputFile, string outputFile);
+	~TicketManager();
+	void printSeats();
+	void ticketRequest(int numOfSeats, int desiredRow, int startSeatNum);
+	void salesReport();
+
 private:
-    SeatStructure SeatAvailability[ROW_NUM][COL_NUM];
-    string outputFile;
-    double SeatPrices[ROW_NUM];
-    void ticketPurchase(SeatStructure seatArray[], int size);
-    void setOutputFile(string s) { outputFile = s; };
-    void populateRowPrices(string s);
-    void populateSeatAvailability(string s);
+	SeatStructure SeatAvailability[ROW_NUM][COL_NUM];
+	string outputFile;
+	double SeatPrices[ROW_NUM];
+	void ticketPurchase(SeatStructure seatArray[], int size);
+	void setOutputFile(string s) { outputFile = s; };
+	void populateRowPrices(string s);
+	void populateSeatAvailability(string s);
+	double getUserInputMoney(string userQuestion, string errorMsg);
 };
 
 #endif /* TicketManager_hpp */

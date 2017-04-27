@@ -111,19 +111,13 @@ int checkMainInput(int input) {
 
 void initiateTicketRequest() {
     // How many seats?
-    int numOfSeats;
-    cout << "How many seats would you like: ";
-    cin >> numOfSeats;
+    int numOfSeats = getUserInputNumber("How many seats would you like: ","Invalid Entry");
     
     // Row Number
-    int rowNumber;
-    cout << "What row would you like: ";
-    cin >> rowNumber;
+    int rowNumber = getUserInputNumber("What row would you like: ","Invalid Entry");
     
     // Starting Seat
-    int startingSeat;
-    cout << "Which seat would you like to start in: ";
-    cin >> startingSeat;
+    int startingSeat = getUserInputNumber("Which seat would you like to start in: ","Invalid Entry");
     
     // Request Tickets
     tm.ticketRequest(numOfSeats, rowNumber, startingSeat);

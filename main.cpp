@@ -96,6 +96,11 @@ int getUserInputNumber(string userQuestion, string errorMsg) {
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
         }
     }
+
+    if (n < 1) {
+        cout << errorMsg << endl;
+        n = getUserInputNumber(userQuestion, errorMsg);
+    }
     return n;
 }
 
@@ -111,13 +116,13 @@ int checkMainInput(int input) {
 
 void initiateTicketRequest() {
     // How many seats?
-    int numOfSeats = getUserInputNumber("How many seats would you like: ","Invalid Entry");
+    int numOfSeats = getUserInputNumber("How many seats would you like: ","Invalid Entry: Must be a positive integer.");
     
     // Row Number
-    int rowNumber = getUserInputNumber("What row would you like: ","Invalid Entry");
+    int rowNumber = getUserInputNumber("What row would you like: ","Invalid Entry: Must be a positive integer.");
     
     // Starting Seat
-    int startingSeat = getUserInputNumber("Which seat would you like to start in: ","Invalid Entry");
+    int startingSeat = getUserInputNumber("Which seat would you like to start in: ","Invalid Entry: Must be a positive integer.");
     
     // Request Tickets
     tm.ticketRequest(numOfSeats, rowNumber, startingSeat);
